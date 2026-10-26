@@ -1,0 +1,51 @@
+.Toastify__toast {
+  background: #1a1a1a !important;
+  color: #fff !important;
+  border-radius: 8px !important;
+  margin-bottom: 1rem !important;
+  padding: 0 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.Toastify__toast-body {
+  padding: 16px !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+}
+
+.Toastify__progress-bar {
+  height: 2px !important;
+  background: #fff !important;
+  opacity: 0.7 !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  transform-origin: left !important;
+}
+
+.Toastify__close-button {
+  display: none !important;
+}
+
+@keyframes progressAnimation {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+.Toastify__progress-bar {
+  animation: progressAnimation 3s linear forwards !important;
+}
+
+/* Remove any icon space */
+.Toastify__toast-icon {
+  display: none !important;
+  width: 0 !important;
+  margin: 0 !important;
+}
