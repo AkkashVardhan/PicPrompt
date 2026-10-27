@@ -1,5 +1,4 @@
-// Replace all toast calls with the unified showToast function
-const standardToastConfig = {
+export const standardToastConfig = {
   style: {
     background: "#1a1a1a",
     color: "#fff",

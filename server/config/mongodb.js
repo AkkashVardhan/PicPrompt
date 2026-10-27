@@ -38,15 +38,18 @@ const connectDB = async () => {
       console.log("MongoDB Disconnected");
     });
 
-    await mongoose.connect(`${process.env.MONGODB_URI}/imagify`, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    const uri = process.env.MONGODB_URI;
+    if (!uri) {
+      console.warn("WARNING: MONGODB_URI is not set in environment variables.");
+      return;
+    }
 
+    // Connect using Mongoose without deprecated options
+    await mongoose.connect(uri);
     console.log("MongoDB Connection Attempted");
   } catch (error) {
-    console.error("MongoDB Connection Failed:", error);
-    process.exit(1);
+    console.error("MongoDB Connection Failed:", error.message || error);
+    console.warn("Server will continue running. Please verify your MONGODB_URI in server/.env.");
   }
 };
 

@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import axios from "axios";
-import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 import Header from "../components/Header";
 import Steps from "../components/Steps";
@@ -17,38 +16,36 @@ const Home = () => {
     imagesGenerated: 0,
     favoriteStyles: 0,
   });
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchDashboardData = async () => {
       if (!token) {
-        setIsLoading(false);
         return;
       }
 
       try {
-        const base =
-          import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+        const base = import.meta.env.VITE_API_URL || "";
         const [creditsResponse, generationsResponse] = await Promise.all([
-          axios.get(`${base}/api/v1/user/credits`, {
+          axios.get(`${base}/api/user/credits`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get(`${base}/api/v1/images/user-generations`, {
+          axios.get(`${base}/api/image/user-generations`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
         ]);
 
         if (creditsResponse.data.success && generationsResponse.data.success) {
+          const gens = generationsResponse.data.recentGenerations || [];
+          const styles = new Set(gens.map((g) => g.style || "default")).size;
           setStats({
             credits: creditsResponse.data.credits || 0,
-            imagesGenerated: generationsResponse.data.totalGenerations || 0,
-            favoriteStyles: generationsResponse.data.uniqueStyles || 0,
+            imagesGenerated:
+              generationsResponse.data.totalGenerations ?? gens.length,
+            favoriteStyles: styles,
           });
         }
       } catch (error) {
         console.error("Dashboard data fetch error:", error);
-      } finally {
-        setIsLoading(false);
       }
     };
 

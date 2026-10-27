@@ -34,7 +34,6 @@ const Navbar = () => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const profileRef = useRef(null);
   const mobileMenuRef = useRef(null);
 

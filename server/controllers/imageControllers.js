@@ -49,25 +49,71 @@ export const generateImage = async (req, res) => {
       });
     }
 
-    const formData = new FormData();
-    formData.append("prompt", prompt);
+    let resultImage;
 
-    const { data } = await axios.post(
-      "https://clipdrop-api.co/text-to-image/v1",
-      formData,
-      {
-        headers: {
-          "x-api-key": process.env.CLIPDROP_API,
-          ...formData.getHeaders(),
-        },
-        responseType: "arraybuffer",
+    try {
+      const formData = new FormData();
+      formData.append("prompt", prompt);
+
+      const { data } = await axios.post(
+        "https://clipdrop-api.co/text-to-image/v1",
+        formData,
+        {
+          headers: {
+            "x-api-key": process.env.CLIPDROP_API,
+            ...formData.getHeaders(),
+          },
+          responseType: "arraybuffer",
+          timeout: 20000,
+        }
+      );
+
+      const base64Image = Buffer.from(data, "binary").toString("base64");
+      resultImage = `data:image/png;base64,${base64Image}`;
+    } catch (clipDropError) {
+      let clipDropMsg = "";
+      if (clipDropError.response?.data) {
+        try {
+          const raw = Buffer.isBuffer(clipDropError.response.data)
+            ? clipDropError.response.data.toString("utf-8")
+            : clipDropError.response.data;
+          const parsed = typeof raw === "string" ? JSON.parse(raw) : raw;
+          clipDropMsg = parsed?.error || parsed?.message || raw;
+        } catch {
+          clipDropMsg = clipDropError.response.data.toString();
+        }
       }
-    );
-    // console.log("hi" , process.env.CLIPDROP_API)
-    console.log(data);
 
-    const base64Image = Buffer.from(data, "binary").toString("base64");
-    const resultImage = `data:image/png;base64,${base64Image}`;
+      console.warn(
+        "ClipDrop API returned error:",
+        clipDropMsg || clipDropError.message
+      );
+      console.log("Generating image via fallback AI service...");
+
+      try {
+        const fallbackUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(
+          prompt
+        )}?width=512&height=512&nologo=true`;
+        const { data: fallbackData } = await axios.get(fallbackUrl, {
+          responseType: "arraybuffer",
+          timeout: 25000,
+        });
+
+        const base64Fallback = Buffer.from(fallbackData, "binary").toString("base64");
+        resultImage = `data:image/jpeg;base64,${base64Fallback}`;
+      } catch (fallbackError) {
+        console.error("Fallback image generation error:", fallbackError.message);
+        const status = clipDropError.response?.status || 500;
+        const msg =
+          clipDropMsg ||
+          (status === 402
+            ? "ClipDrop account has 0 remaining credits."
+            : status === 403 || status === 401
+            ? "Invalid or revoked ClipDrop API key."
+            : "Error generating image");
+        return res.status(status).json({ success: false, message: msg });
+      }
+    }
 
     // Update user credits
     await userModel.findByIdAndUpdate(user._id, {
@@ -89,15 +135,8 @@ export const generateImage = async (req, res) => {
       generationId: newGeneration._id,
     });
   } catch (error) {
-    console.error("ClipDrop API Error:", error.response?.data || error.message);
-    if (error.response?.status === 403) {
-      return res.status(403).json({
-        success: false,
-        message:
-          "Invalid or revoked API key. Please check your ClipDrop API key configuration.",
-      });
-    }
-    res.status(500).json({ success: false, message: "Error generating image" });
+    console.error("Error in generateImage:", error.message || error);
+    res.status(500).json({ success: false, message: error.message || "Error generating image" });
   }
 };
 
@@ -133,6 +172,7 @@ export const getUserGenerations = async (req, res) => {
 
     res.json({
       success: true,
+      totalGenerations: generations.length,
       recentGenerations: generations,
     });
   } catch (error) {

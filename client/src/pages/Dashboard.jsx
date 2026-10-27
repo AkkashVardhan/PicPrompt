@@ -8,7 +8,6 @@ import { motion } from "framer-motion";
 const Dashboard = () => {
   const { user, token, backendUrl } = useContext(AppContext);
   const navigate = useNavigate();
-  const [isNameHovered, setIsNameHovered] = useState(false);
   const [stats, setStats] = useState({
     credits: 0,
     imagesGenerated: 0,
@@ -35,13 +34,13 @@ const Dashboard = () => {
         const [creditsResponse, generationsResponse] = await Promise.all([
           axios.get(`${backendUrl}/api/user/credits`, {
             headers: {
-              token,
+              Authorization: `Bearer ${token}`,
               "Content-Type": "application/json",
             },
           }),
           axios.get(`${backendUrl}/api/image/user-generations`, {
             headers: {
-              token,
+              Authorization: `Bearer ${token}`,
               "Content-Type": "application/json",
             },
           }),
@@ -51,10 +50,13 @@ const Dashboard = () => {
         console.log("Generations response:", generationsResponse.data);
 
         if (creditsResponse.data.success && generationsResponse.data.success) {
+          const gens = generationsResponse.data.recentGenerations || [];
+          const styles = new Set(gens.map((g) => g.style || "default")).size;
           setStats({
             credits: creditsResponse.data.credits || 0,
-            imagesGenerated: generationsResponse.data.totalGenerations || 0,
-            favoriteStyles: generationsResponse.data.uniqueStyles || 0,
+            imagesGenerated:
+              generationsResponse.data.totalGenerations ?? gens.length,
+            favoriteStyles: styles,
           });
           setError(null);
         } else {

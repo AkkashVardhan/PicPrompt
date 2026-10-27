@@ -48,4 +48,4 @@ const imageSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("images", imageSchema);
+export default mongoose.models.images || mongoose.model("images", imageSchema);

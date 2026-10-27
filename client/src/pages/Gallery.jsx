@@ -33,12 +33,13 @@ const Gallery = () => {
     if (token) {
       fetchUserImages();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
   const fetchUserImages = async () => {
     try {
       setLoading(true);
-      const base = import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
+      const base = import.meta.env.VITE_API_URL || "";
       const response = await axios.get(`${base}/api/image/user-generations`, {
         headers: {
           Authorization: `Bearer ${token}`,

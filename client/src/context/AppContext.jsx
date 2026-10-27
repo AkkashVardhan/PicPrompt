@@ -48,7 +48,7 @@ const AppContextProvider = (props) => {
 
   const [credit, setCredit] = useState(false);
 
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const backendUrl = import.meta.env.VITE_API_URL || "";
 
   const navigate = useNavigate();
 
@@ -66,7 +66,7 @@ const AppContextProvider = (props) => {
       }
     } catch (error) {
       console.log(error);
-      showToast(error.message);
+      showToast(error.response?.data?.message || error.message);
     }
   };
 
@@ -75,7 +75,7 @@ const AppContextProvider = (props) => {
       const { data } = await axios.post(
         backendUrl + "/api/image/generate-image",
         { prompt },
-        { headers: { token } }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
       if (data.success) {
@@ -87,12 +87,17 @@ const AppContextProvider = (props) => {
           showToast("Not enough credits. Premium features coming soon!");
           return { success: false };
         }
+        showToast(data.message || "Image generation failed");
         loadCreditsData();
         return null;
       }
     } catch (error) {
       console.log("Image generation error:", error);
-      // Don't show error toast, just return null
+      const errMsg =
+        error.response?.data?.message ||
+        error.message ||
+        "Image generation failed";
+      showToast(errMsg);
       return null;
     }
   };
@@ -106,8 +111,9 @@ const AppContextProvider = (props) => {
 
   useEffect(() => {
     if (token) {
-      // loadCreditsData();
+      loadCreditsData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token]);
 
   useEffect(() => {

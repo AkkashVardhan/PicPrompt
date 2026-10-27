@@ -5,7 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Settings = () => {
-  const { user, token, logout } = useContext(AppContext);
+  const { user, setUser, token, logout } = useContext(AppContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: user?.name || "",
@@ -13,6 +13,15 @@ const Settings = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+
+  React.useEffect(() => {
+    if (user) {
+      setFormData({
+        name: user.name || "",
+        avatar: user.avatar || "",
+      });
+    }
+  }, [user]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -22,14 +31,15 @@ const Settings = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const base = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
-      const response = await axios.put(`${base}/api/v1/user/update`, formData, {
+      const base = import.meta.env.VITE_API_URL || "";
+      const response = await axios.put(`${base}/api/user/update`, formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.data.success) {
         showToast("Profile updated successfully");
-        // Refresh the page or update user context
-        window.location.reload();
+        if (response.data.user && setUser) {
+          setUser(response.data.user);
+        }
       }
     } catch (error) {
       showToast(error.response?.data?.message || "Error updating profile");
@@ -40,8 +50,8 @@ const Settings = () => {
 
   const handleDeleteAccount = async () => {
     try {
-      const base = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
-      const response = await axios.delete(`${base}/api/v1/user/delete`, {
+      const base = import.meta.env.VITE_API_URL || "";
+      const response = await axios.delete(`${base}/api/user/delete`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.data.success) {

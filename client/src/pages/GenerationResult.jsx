@@ -20,7 +20,7 @@ const GenerationResult = () => {
           `${backendUrl}/api/image/generation/${id}`,
           {
             headers: {
-              token,
+              Authorization: `Bearer ${token}`,
               "Content-Type": "application/json",
             },
           }

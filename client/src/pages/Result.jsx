@@ -94,13 +94,15 @@ const Result = () => {
     setLoading(true);
     try {
       const result = await generateImage(input);
-      if (result && result.resultImage) {
+      const imageUrl =
+        typeof result === "string" ? result : result?.resultImage;
+      if (imageUrl) {
         setIsImageLoaded(true);
-        setImage(result.resultImage);
+        setImage(imageUrl);
       }
     } catch (error) {
-      // Silently handle any errors without showing error UI
       console.log("Image generation failed:", error);
+      showToast("Image generation failed. Please try again.");
     }
     setLoading(false);
   };

@@ -23,6 +23,7 @@
  */
 
 import userModel from "../models/userModel.js";
+import imageModel from "../models/imageModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -80,7 +81,11 @@ const registerUser = async (req, res) => {
 
     return res
       .status(201)
-      .json({ success: true, token, user: { name: user.name } });
+      .json({
+        success: true,
+        token,
+        user: { name: user.name, email: user.email, avatar: user.avatar || "" },
+      });
   } catch (error) {
     console.error("registerUser unexpected error:", error);
     return res.status(500).json({ success: false, message: error.message });
@@ -101,7 +106,11 @@ const loginUser = async (req, res) => {
     if (isMatch) {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 
-      res.json({ success: true, token, user: { name: user.name } });
+      res.json({
+        success: true,
+        token,
+        user: { name: user.name, email: user.email, avatar: user.avatar || "" },
+      });
     } else {
       return res.json({ success: false, message: "invalid credentials" });
     }
@@ -142,7 +151,7 @@ const userCredits = async (req, res) => {
     res.json({
       success: true,
       credits: user.creditBalance,
-      user: { name: user.name },
+      user: { name: user.name, email: user.email, avatar: user.avatar || "" },
     });
   } catch (error) {
     console.error("Error in userCredits:", error);
@@ -150,4 +159,56 @@ const userCredits = async (req, res) => {
   }
 };
 
-export { registerUser, loginUser, userCredits };
+const updateUser = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { name, avatar } = req.body;
+
+    const updateData = {};
+    if (name) updateData.name = name;
+    if (avatar !== undefined) updateData.avatar = avatar;
+
+    const updatedUser = await userModel
+      .findByIdAndUpdate(userId, updateData, { new: true })
+      .select("-password");
+
+    if (!updatedUser) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    res.json({
+      success: true,
+      message: "Profile updated successfully",
+      user: {
+        name: updatedUser.name,
+        email: updatedUser.email,
+        avatar: updatedUser.avatar || "",
+      },
+    });
+  } catch (error) {
+    console.error("Error in updateUser:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+const deleteUser = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    // Delete associated images
+    await imageModel.deleteMany({ userId });
+
+    // Delete user
+    const deletedUser = await userModel.findByIdAndDelete(userId);
+    if (!deletedUser) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    res.json({ success: true, message: "Account deleted successfully" });
+  } catch (error) {
+    console.error("Error in deleteUser:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export { registerUser, loginUser, userCredits, updateUser, deleteUser };

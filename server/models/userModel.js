@@ -28,6 +28,7 @@ const userSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     creditBalance: { type: Number, default: 5 },
+    avatar: { type: String, default: "" },
   },
   {
     timestamps: true, // Add timestamps for better tracking
@@ -35,6 +36,6 @@ const userSchema = new mongoose.Schema(
 );
 
 // Fix the model registration
-const userModel = mongoose.model("user", userSchema);
+const userModel = mongoose.models.user || mongoose.model("user", userSchema);
 
 export default userModel;
