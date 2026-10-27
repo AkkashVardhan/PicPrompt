@@ -1,303 +1,266 @@
-
 <div align="center">
 
-<img src="client/public/favicon.svg" alt="Imagify Logo" width="180"/>
+<img src="client/public/favicon.svg" alt="PicPrompt Logo" width="180"/>
 
-# ✨ PicPrompt - AI Transforming Your Images Magically ✨
+# ✨ PicPrompt — AI-Powered Image Generation ✨
 
-> 🎨 Where Creativity Meet Technology
+> 🎨 Turn your imagination into images with AI.
 
-[![React](https://img.shields.io/badge/React-19.0.0-61DAFB?style=for-the-badge&logo=react&logoColor=white&labelColor=20232A)](https://reactjs.org/)
-[![Vite](https://img.shields.io/badge/Vite-6.2.0-646CFF?style=for-the-badge&logo=vite&logoColor=white&labelColor=20232A)](https://vitejs.dev/)
-[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.0.15-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white&labelColor=20232A)](https://tailwindcss.com/)
-[![Express.js](https://img.shields.io/badge/Express-4.18.0-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
+[![React](https://img.shields.io/badge/React-19.0.0-61DAFB?style=for-the-badge&logo=react&logoColor=white&labelColor=20232A)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-6.2.0-646CFF?style=for-the-badge&logo=vite&logoColor=white&labelColor=20232A)](https://vite.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0.15-38B2AC?style=for-the-badge&logo=tailwindcss&logoColor=white&labelColor=20232A)](https://tailwindcss.com/)
+[![Express.js](https://img.shields.io/badge/Express.js-4.x-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
 
-
----
+**[🌐 Live Demo](https://pic-prompt-ashy.vercel.app) · [📦 GitHub Repository](https://github.com/AkkashVardhan/PicPrompt) · [🐛 Report an Issue](https://github.com/AkkashVardhan/PicPrompt/issues)**
 
 </div>
 
+---
 
-# PicPrompt — AI Image Generation Platform
-
-## Live **In:** [https://picprompt-1.onrender.com/](https://picprompt-1.onrender.com/)
+## 📖 Table of Contents
 
 - [Overview](#overview)
 - [Tech Stack](#tech-stack)
 - [Features](#features)
-- [Demo & Deployment](#demo--deployment)
-- [Folder Structure](#folder-structure)
+- [Demo and Deployment](#demo-and-deployment)
+- [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
-  - [1. Prerequisites](#1-prerequisites)
-  - [2. Backend Setup](#2-backend-setup)
-  - [3. Frontend Setup](#3-frontend-setup)
 - [Configuration](#configuration)
 - [API Overview](#api-overview)
 - [Usage Guide](#usage-guide)
-- [Build & Deployment](#build--deployment)
-- [Common Issues & Solutions](#common-issues--solutions)
+- [Build and Deployment](#build-and-deployment)
+- [Troubleshooting](#troubleshooting)
 - [Contributing](#contributing)
 - [License](#license)
-- [Contact & Support](#contact--support)
-
-***
+- [Author](#author)
 
 ## Overview
 
-**PicPrompt** is an open-source, full-stack AI-powered platform allowing users to instantly generate high-quality images from text prompts using the latest AI models (e.g., ClipDrop API). Built on the MERN stack, PicPrompt supports user registration, authentication, credit tracking, an image gallery with search, and profile management — all wrapped in a performant, responsive, and modern interface.
+**PicPrompt** is a full-stack, AI-powered image-generation platform that turns text prompts into images using the ClipDrop API. Users can create an account, generate images, manage generation credits, and browse their creations through a responsive interface.
 
-***
+## 🛠️ Tech Stack
 
-## Tech Stack
+| Layer | Technology |
+|---|---|
+| Frontend | React, Vite, Tailwind CSS |
+| Backend | Node.js, Express.js |
+| Database | MongoDB Atlas / MongoDB |
+| Authentication | JWT (JSON Web Tokens) |
+| Image Generation | ClipDrop API |
+| Deployment | Vercel (frontend), Render (backend) |
 
-| Layer      | Technology                                      |
-|------------|-------------------------------------------------|
-| Frontend   | React.js, Vite, TailwindCSS                     |
-| Backend    | Node.js, Express.js                             |
-| Database   | MongoDB (Atlas or local)                        |
-| Auth       | JWT (JSON Web Tokens)                           |
-| Image AI   | ClipDrop API                                    |
-| Styling    | TailwindCSS, custom CSS, Outfit font (Google)   |
-| Deployment | Render (frontend and backend), Vercel/Netlify-ready |
+## ✨ Features
 
-***
+- 🔐 **Authentication:** User registration and login.
+- 🎨 **AI image generation:** Create images from text prompts.
+- 🖼️ **Image gallery:** Browse generated images and their metadata.
+- 📊 **Credits:** Track image-generation usage according to the app's credit logic.
+- 👤 **Account management:** Manage profile and account settings.
+- 📱 **Responsive interface:** Designed for desktop, tablet, and mobile screens.
 
-## Features
+## 🌐 Demo and Deployment
 
-- 🔐 **User authentication** — JWT-based, secure signup/login.
-- 🎨 **AI text-to-image** — Generate images from text prompts (ClipDrop).
-- 👤 **Profile management** — Update info, delete account, manage credits.
-- 📊 **Credits** — Track usage/limits for AI generations.
-- 🖼️ **Image gallery** — Stores generated images with metadata.
-- 🔎 **Search & filter** — Find images by prompt, date, or tags.
-- 💻 **Responsive design** — Works on mobile, tablet, desktop.
-- ⚡ **Fast setup** — Vite-powered frontend and hot reload dev experience.
-- 🔒 **Secure** — API key, secrets, and image data handled privately.
+- **Frontend:** [https://pic-prompt-ashy.vercel.app](https://pic-prompt-ashy.vercel.app)
+- **Backend:** [https://picpromptbackend.onrender.com](https://picpromptbackend.onrender.com)
+- **Repository:** [https://github.com/AkkashVardhan/PicPrompt](https://github.com/AkkashVardhan/PicPrompt)
 
-***
+> Render free instances may take a little time to respond after a period of inactivity.
 
-## Demo & Deployment
+## 📁 Project Structure
 
-- **Frontend:** [https://picprompt-1.onrender.com/](https://picprompt-1.onrender.com/)
-- **Backend API:** [https://picprompt-rvgy.onrender.com/](https://picprompt-rvgy.onrender.com/)
-
-***
-
-## Folder Structure
-
-```
+```text
 PicPrompt/
-│
-├── client/           # Frontend (React + Vite)
-│   ├── public/       # Static assets (favicon, meta, index.html)
+├── client/                  # React + Vite frontend
+│   ├── public/              # Static assets
 │   ├── src/
-│   │   ├── assets/   # SVGs, images, icons
-│   │   ├── components/ # Shared UI components
-│   │   ├── context/  # React context (auth, state)
-│   │   ├── pages/    # Main route pages
-│   │   ├── index.css # Main CSS (Tailwind + custom)
-│   │   └── main.jsx  # Entrypoint
-│   ├── .env          # Frontend env (not committed)
-│   ├── tailwind.config.js
-│   ├── postcss.config.js
+│   │   ├── assets/           # Images, icons, and other assets
+│   │   ├── components/       # Reusable UI components
+│   │   ├── config/           # Frontend configuration
+│   │   ├── context/           # React context and application state
+│   │   ├── pages/             # Page components
+│   │   ├── App.jsx
+│   │   └── main.jsx
 │   └── package.json
-│
-├── server/           # Backend (Express API)
-│   ├── config/       # DB config (mongodb.js)
-│   ├── controllers/  # Route controllers
-│   ├── middlewares/  # JWT auth, error handling
-│   ├── models/       # Mongoose models (User, Image)
-│   ├── routes/       # API routes
-│   ├── .env          # Backend env (not committed)
+├── server/                  # Express backend
+│   ├── config/              # Database configuration
+│   ├── controllers/         # Request handlers
+│   ├── middlewares/         # Middleware
+│   ├── models/              # Mongoose models
+│   ├── routes/               # API routes
 │   ├── server.js
 │   └── package.json
-│
-├── README.md
-├── package.json      # Root (optional for monorepo tools)
-└── ...               # Other project files
+├── package.json
+├── package-lock.json
+└── README.md
 ```
 
-***
+## 🚀 Getting Started
 
-## Getting Started
+### Prerequisites
 
-### 1. Prerequisites
-
-- Node.js v18+ and npm v9+ installed
+- [Node.js](https://nodejs.org/) (use a version compatible with the project)
+- npm
 - Git
-- MongoDB URI (Atlas recommended)  
-- ClipDrop API key ([get free trial or paid key](https://clipdrop.co/apis/))
-- Render or choose another deployment platform
+- A MongoDB connection string
+- A ClipDrop API key
 
-***
-
-### 2. Backend Setup
+### 1. Clone the repository
 
 ```bash
-# Open terminal
+git clone https://github.com/AkkashVardhan/PicPrompt.git
+cd PicPrompt
+```
+
+### 2. Backend setup
+
+```bash
 cd server
 npm install
+```
 
-# Create .env (see template below)
-touch .env
+Create a `server/.env` file and add the variables expected by your backend:
 
-# Add your environment variables:
-PORT=5000
-MONGODB_URI=your-mongodb-connection-string
-JWT_SECRET=your-very-strong-secret
-CLIPDROP_API=your-clipdrop-api-key
+```env
+PORT=4000
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_strong_jwt_secret
+CLIPDROP_API=your_clipdrop_api_key
+```
 
-# Start backend (dev)
+Then start the backend using the script defined in `server/package.json`. If that script is named `server`, run:
+
+```bash
 npm run server
 ```
 
-***
+If your backend uses a different start script, use the script defined in that file.
 
-### 3. Frontend Setup
+### 3. Frontend setup
+
+Open a second terminal:
 
 ```bash
-# Open another terminal
 cd client
 npm install
+```
 
-# Create .env
-touch .env
+Create `client/.env` and set the API URL variable used by your frontend code. For example, if the frontend reads `VITE_API_URL`:
 
-# Add variable (for local dev)
-VITE_BACKEND_URL=http://localhost:5000
+```env
+VITE_API_URL=http://localhost:4000
+```
 
-# For production, set to your Render backend URL:
-# VITE_BACKEND_URL=https://picprompt-rvgy.onrender.com
+Start the Vite development server:
 
-# Run dev server
+```bash
 npm run dev
 ```
 
-***
+> **Important:** The environment-variable name and local backend port must match your code. Vite exposes only variables prefixed with `VITE_` to frontend code.
 
-## Configuration
+## ⚙️ Configuration
 
-### Backend `.env` example
+### Backend environment variables
 
+Configure these in `server/.env` locally and in the backend service's environment settings when deployed:
+
+| Variable | Purpose |
+|---|---|
+| `PORT` | Port used by the server; on Render, the app should listen on the port supplied by the platform. |
+| `MONGODB_URI` | MongoDB connection string |
+| `JWT_SECRET` | Secret used to sign/verify tokens |
+| `CLIPDROP_API` | ClipDrop API key |
+
+Use the exact variable names referenced by your backend code. Never commit real credentials or API keys.
+
+### Frontend environment variables
+
+For the deployed frontend, configure the API URL in Vercel's **Project Settings → Environment Variables**. The current backend URL is:
+
+```text
+https://picpromptbackend.onrender.com
 ```
-PORT=5000
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/PicPrompt
-JWT_SECRET=your-very-secure-secret
-CLIPDROP_API=your-clipdrop-api-key
-```
 
-### Frontend `.env` example
+The variable name must match the one read by your frontend code (for example, `VITE_API_URL`). After changing a Vite environment variable, create a new deployment for the change to take effect.
 
-```
-VITE_BACKEND_URL=https://picprompt-rvgy.onrender.com
-```
+## 🔌 API Overview
 
-***
+The API routes below are examples of common operations. Exact paths depend on the routes configured in `server/routes/`; check those files if an endpoint differs.
 
-## API Overview
+| Operation | Method | Example route |
+|---|---|---|
+| Register | POST | `/api/user/register` |
+| Login | POST | `/api/user/login` |
+| Generate an image | POST | Check the image routes in `server/routes/` |
+| Retrieve user images | GET | Check the image routes in `server/routes/` |
 
-| Endpoint                    | Method | Description                      | Auth Required |
-|-----------------------------|--------|----------------------------------|--------------|
-| `/api/v1/auth/register`     | POST   | Register a new user              | No           |
-| `/api/v1/auth/login`        | POST   | Login, returns JWT               | No           |
-| `/api/v1/image/generate`    | POST   | Generate image from prompt       | Yes          |
-| `/api/v1/image/user`        | GET    | Get user’s generated images      | Yes          |
-| `/api/v1/image/:id`         | GET    | Get one image by generationId    | Yes          |
-| `/api/v1/user/:id`          | PATCH  | Update user settings/profile     | Yes          |
+Authenticated requests must use the authentication mechanism implemented by the backend. If it uses bearer tokens, include:
 
-_All API requests (except login/register) require Authorization header:_
-
-```
+```http
 Authorization: Bearer <token>
 ```
 
-***
+## 🧭 Usage Guide
 
-## Usage Guide
+1. Open the [live application](https://pic-prompt-ashy.vercel.app).
+2. Register for an account or log in.
+3. Enter a text prompt and generate an image.
+4. Browse your generated images in the gallery.
+5. Manage your account and credits through the available settings.
 
-1. **Register**
-   - Go to the site, click Sign Up, fill your details.
-2. **Login**
-   - Enter email and password, receive JWT token, begin session.
-3. **Generate Images**
-   - Enter a prompt (e.g. "a cat surfing on a skateboard"), click "Generate".
-   - AI returns your image, view in gallery, download or share.
-4. **Manage Images**
-   - See all your generations, search, filter, delete if needed.
-5. **Credits**
-   - Each generation uses credits. Buy more/earn/refill as per app logic.
-6. **Settings**
-   - Update profile or change password, delete account if desired.
+Available features depend on the current application implementation.
 
-***
+## 🏗️ Build and Deployment
 
-## Build & Deployment
+### Frontend — Vercel
 
-### Building for Production
+- **Repository:** `AkkashVardhan/PicPrompt`
+- **Root directory:** `client`
+- **Build command:** `npm run build`
+- **Output directory:** `dist`
+- **Environment variable:** Set the frontend API URL variable to `https://picpromptbackend.onrender.com`, using the exact variable name expected by your code.
 
-```bash
-cd client
-npm run build
-# Static assets will be in client/dist
-```
+### Backend — Render
 
-### Render Deployment
+- **Root directory:** `server`
+- **Build command:** `npm install`
+- **Start command:** Use the start script configured in `server/package.json`.
+- Add the required backend environment variables in Render's environment settings.
 
-- **Frontend:**
-  - Root Directory: `client`
-  - Build Command: `npm install && npm run build`
-  - Publish Directory: `dist`
-  - Env: `VITE_BACKEND_URL=https://picprompt-rvgy.onrender.com`
-- **Backend:**  
-  - Root Directory: `server`
-  - Start command: `npm run server`
-  - Add all backend `.env` vars under "Environment"
+## 🧰 Troubleshooting
 
-### Netlify/Vercel
+- **API URL contains `undefined`:** Check the frontend's Vite environment-variable name and make sure it is configured in Vercel. Redeploy after changing it.
+- **Login or registration fails:** Confirm the frontend is calling the correct Render backend URL and inspect the backend logs.
+- **MongoDB connection fails:** Verify the MongoDB connection string, database user credentials, and Atlas network access rules.
+- **ClipDrop requests fail:** Verify the API key on the backend and check the provider's response.
+- **CORS errors:** Ensure the backend permits requests from the deployed frontend domain.
+- **Environment changes do not appear:** Restart the local development server or redeploy the frontend.
 
-- Set base/root: `client`
-- Build command: `npm run build`
-- Publish/output: `dist`
-- Env: set `VITE_BACKEND_URL` to deployed backend url
+## 🤝 Contributing
 
-***
+Contributions are welcome!
 
-## Common Issues & Solutions
+1. Fork the repository.
+2. Create a feature branch.
+3. Make your changes and test them.
+4. Open a pull request describing the changes.
+5. Never commit API keys, passwords, or other secrets.
 
-- **Tailwind build error:**
-  - Ensure Tailwind `content` in tailwind.config.js covers all source files.
-  - Place all custom styles inside `@layer base` (do **not** use `@reference` in main CSS).
-- **API key security:**  
-  - Never expose ClipDrop or JWT secrets on frontend or repo.
-- **CORS Issues:**  
-  - Both servers must allow requests to/from each other in dev.
-- **Env variables not read:**  
-  - Double-check `.env` file spelling/location and restart dev server after changes.
+## 📄 License
 
-***
+See the [`LICENSE`](LICENSE) file if one is present in the repository. If you intend to distribute this project under the MIT License, ensure the repository includes the MIT license text.
 
-## Contributing
+## 👨‍💻 Author
 
-1. Fork the repo, create new feature branch.
-2. Add tests/doc where reasonable.
-3. Open a Pull Request — describe changes and motivation.
-4. Ensure no real secrets in commits.
+**Akkash Vardhan S**
 
-***
+- GitHub: [@AkkashVardhan](https://github.com/AkkashVardhan)
+- Project: [PicPrompt](https://github.com/AkkashVardhan/PicPrompt)
 
-## License
+---
 
-MIT License — see [LICENSE](LICENSE).
+<div align="center">
 
-***
+Made with ❤️ by **Akkash Vardhan S**
 
-## Contact & Support
-
-For issues, open a [GitHub issue](https://github.com/singh04ayush/imagify/issues)  
-For deployment help, open an issue or reach out directly via project discussions tab.
-
-***
-
-Made with ❤️ by Bhuvanesh.
-
-***
+</div>
